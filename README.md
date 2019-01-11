@@ -1,6 +1,62 @@
 # AotProdEnv
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4 but has been upgrade to 7.2.0.
+
+## Bug
+
+Environment files that are composed using the spread operator do not work when used in a production configuration.
+
+Note that Object.assign does not work as well.
+
+Potentially related: https://github.com/angular/angular-cli/issues/9511
+
+## Testing Reported Bug
+
+Note environment data can also be seen in console
+
+### Non-production mode
+
+Run `ng serve -c dev` and navigate to `http://localhost:4200/`
+
+Screen should show:
+
+---
+Environment Config Information
+
+Prod mode: false
+
+{"production":false,"commonMessage":"Seen by all envs","envMessage":"Dev message"}
+
+---
+
+### BUG: Production mode 
+
+Run `ng serve -c production` and navigate to `http://localhost:4200/`
+
+Screen should show (but doesn't):
+
+---
+Environment Config Information
+
+Prod mode: false
+
+{"production":true,"commonMessage":"Seen by all envs","envMessage":"Prod message"}
+
+---
+
+#### Instead "commonMessage":"Seen by all envs" is missing
+
+Screen shows:
+
+---
+
+Environment Config Information
+
+Prod mode: true
+
+{"production":true,"envMessage":"Prod message"}
+
+---
 
 ## Development server
 
